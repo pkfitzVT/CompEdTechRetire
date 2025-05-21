@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import LabeledInput from './LabeledInput';
 
-function PensionCalculator() {
+function PensionCalculator({ onResult }) {
     const [initialSalary, setInitialSalary] = useState('');
     const [raisePercent, setRaisePercent] = useState('');
     const [pensionPercent, setPensionPercent] = useState('');
@@ -40,6 +40,11 @@ function PensionCalculator() {
         const pension = avgTop3 * multiplier * (pensionPercentNum / 100);
 
         setResult({
+            avgTop3: avgTop3.toFixed(2),
+            multiplier: multiplier.toFixed(3),
+            pension: pension.toFixed(2)
+        });
+        onResult({
             avgTop3: avgTop3.toFixed(2),
             multiplier: multiplier.toFixed(3),
             pension: pension.toFixed(2)
