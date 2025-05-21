@@ -1,13 +1,13 @@
+# issues.py
 import os
 from dotenv import load_dotenv
 import requests
 
-# Load from .env
 load_dotenv()
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-
 REPO_OWNER = "pkfitzVT"
 REPO_NAME = "CompEdTechRetire"
+...
 
 
 # Issue list
