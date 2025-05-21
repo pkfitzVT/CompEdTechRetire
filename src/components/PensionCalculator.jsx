@@ -6,7 +6,7 @@ function PensionCalculator() {
     const [raisePercent, setRaisePercent] = useState('');
     const [pensionPercent, setPensionPercent] = useState('');
     const [yearsOfService, setYearsOfService] = useState('');
-    const [annualExpenses, setAnnualExpenses] = useState('');
+
     const [result, setResult] = useState(null);
 
     const handleSubmit = (e) => {
@@ -31,7 +31,13 @@ function PensionCalculator() {
 
         const avgTop3 = salaries.sort((a, b) => b - a).slice(0, 3).reduce((sum, val) => sum + val, 0) / 3;
         const multiplier = (yos + 15) / 30;
-        const pension = avgTop3 * multiplier;
+        const pensionPercentNum = parseFloat(pensionPercent);
+        if (isNaN(pensionPercentNum)) {
+            alert("Please enter a valid pension percentage.");
+            return;
+        }
+
+        const pension = avgTop3 * multiplier * (pensionPercentNum / 100);
 
         setResult({
             avgTop3: avgTop3.toFixed(2),
@@ -45,20 +51,23 @@ function PensionCalculator() {
             <form onSubmit={handleSubmit}>
                 <LabeledInput label="Initial Salary:" value={initialSalary} onChange={(e) => setInitialSalary(e.target.value)} />
                 <LabeledInput label="% Raises Per Year:" value={raisePercent} onChange={(e) => setRaisePercent(e.target.value)} />
-                <LabeledInput label="% Pension (ignored for now):" value={pensionPercent} onChange={(e) => setPensionPercent(e.target.value)} />
+                <LabeledInput label="% Pension :" value={pensionPercent} onChange={(e) => setPensionPercent(e.target.value)} />
                 <LabeledInput label="Years of Service at Start:" value={yearsOfService} onChange={(e) => setYearsOfService(e.target.value)} />
-                <LabeledInput label="Annual Expenses:" value={annualExpenses} onChange={(e) => setAnnualExpenses(e.target.value)} />
+
                 <button type="submit">Calculate Pension</button>
             </form>
 
             {result && (
-                <div>
-                    <h4>Results:</h4>
-                    <p>Average Top 3 Years: ${result.avgTop3}</p>
-                    <p>Multiplier: {result.multiplier}</p>
-                    <p><strong>Annual Pension: ${result.pension}</strong></p>
+                <div style={{ marginTop: '1.5rem', padding: '1rem', border: '1px solid #ccc', borderRadius: '8px', backgroundColor: '#f2f2f2' }}>
+                    <h3>Pension Calculation Summary</h3>
+                    <ul>
+                        <li><strong>Average of Top 3 Years:</strong> ${result.avgTop3}</li>
+                        <li><strong>Pension Multiplier:</strong> {result.multiplier}</li>
+                        <li><strong>Estimated Annual Pension:</strong> ${result.pension}</li>
+                    </ul>
                 </div>
             )}
+
         </div>
     );
 }
