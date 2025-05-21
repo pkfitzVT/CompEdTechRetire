@@ -1,26 +1,88 @@
-/* src/App.css */
+:root {
+  --light-blue: #4a90e2;
+  --medium-blue: #357ab7;
+  --dark-blue: #2c5aa0;
+  --active-shadow: rgba(0, 0, 0, 0.2);
+  --background-light: #f9f9f9;
+  --text-light: #fff;
+  --border-radius: 6px;
+}
 
-.app-container {
-  display: flex;
-  flex-direction: row;
-  min-height: 100vh;
+[data-theme="dark"] {
+  --background-light: #222;
+  --text-light: #fff;
+  --active-shadow: rgba(255, 255, 255, 0.2);
+}
+
+.app-wrapper {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
   font-family: Arial, sans-serif;
 }
 
-.left-panel,
-.right-panel {
-  flex: 1;
-  padding: 2rem;
-  border-right: 1px solid #ccc;
-  box-sizing: border-box;
+.tab-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 3px solid #ccc;
+  position: relative;
 }
 
-.right-panel {
-  border-right: none;
-  background-color: #f9f9f9;
+.tab-bar button {
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text-light);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  background: transparent;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-h2 {
-  margin-top: 0;
+.tab-bar button:nth-child(1) {
+  background-color: var(--light-blue);
+}
+.tab-bar button:nth-child(2) {
+  background-color: var(--medium-blue);
+}
+.tab-bar button:nth-child(3) {
+  background-color: var(--dark-blue);
 }
 
+/* Hover */
+.tab-bar button:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+/* Active Tab */
+.tab-bar button.active {
+  border-bottom: 3px solid white;
+  box-shadow: 0 4px 6px var(--active-shadow);
+  transform: translateY(-2px);
+}
+
+/* Disabled Tab */
+.tab-bar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Animated underline bar */
+.tab-bar::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  height: 3px;
+  width: 100%;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.tab-content {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0 var(--border-radius) var(--border-radius) var(--border-radius);
+  background-color: var(--background-light);
+}
